@@ -2,7 +2,15 @@
 # inspired by https://www.reddit.com/r/commandline/comments/18b05p/i_wrote_a_quick_and_simple_script_to_download_and/
 
 if [[ $1 == '' ]]; then
-  echo "Usage: youff <url>"
+  echo "Usage:
+          youff <url>
+          youff -merge video audio"
+
+elif [[ $1 == '--merge' ]]; then
+  VID=$2
+  AUD=$3
+  ffmpeg -i "$VID" -i "$AUD" -c copy "$2".mkv
+
 else
   URL="$1"
 
@@ -10,18 +18,25 @@ else
   youtube-dl -F $URL
 
   # download audio
-  echo "format code of audio to download?"
+  echo ""
+  echo "format code of audio to download (0 to skip)?"
   read FCA
-  youtube-dl -f $FCA $URL
-  AUD=$(youtube-dl -f $FCA --get-filename $URL)
+  if [[ $FCA == 0 ]]; then
+    echo "skipping downloading audio"
+  else
+    youtube-dl -f $FCA $URL
+    AUD=$(youtube-dl -f $FCA --get-filename $URL)
+  fi
 
   # download video
-  echo "format code of video to download?"
+  echo ""
+  echo "format code of video to download (0 to skip)?"
   read FCV
-  youtube-dl -f $FCV $URL
-  VID=$(youtube-dl -f $FCV --get-filename $URL)
-
-  # merge video & audio
-  OUTPUT=$(youtube-dl --get-filename $URL)
-  ffmpeg -i "$VID" -i "$AUD" -c copy "$OUTPUT.mkv"
+  if [[ $FCV == 0 ]]; then
+    echo "skipping downloading video"
+  else
+    youtube-dl -f $FCV $URL
+    VID=$(youtube-dl -f $FCV --get-filename $URL)
+  fi
 fi
+
