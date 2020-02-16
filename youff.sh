@@ -4,10 +4,7 @@
 if [[ $1 == '' ]]; then
   echo "Usage: youff <url>"
 else
-#  # get url
-#  echo "URL to download from?"
-#  read URL
-URL="$1"
+  URL="$1"
 
   # list availabel quality & format
   youtube-dl -F $URL
