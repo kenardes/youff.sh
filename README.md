@@ -5,3 +5,5 @@ Well, it is a crude bash script, don't expect much from it. As long as it work f
 To run this script, we neeed :<br />
 * youtube-dl<br />
 * ffmpeg
+
+Warning, you on your own if using this script.
