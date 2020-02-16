@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # inspired by https://www.reddit.com/r/commandline/comments/18b05p/i_wrote_a_quick_and_simple_script_to_download_and/
 
-if [[ $1 == ' ' ]]; then
+if [[ $1 == '' ]]; then
   echo "Usage: youff <url>"
 else
 #  # get url
