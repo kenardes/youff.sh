@@ -4,12 +4,17 @@
 if [[ $1 == '' ]]; then
   echo "Usage:
           youff <url>
-          youff -merge video audio"
+          youff --merge <video.mp4> <audio.m4a>
+	  youff --a2aac <audio.m4a>"
 
 elif [[ $1 == '--merge' ]]; then
   VID=$2
   AUD=$3
-  ffmpeg -i "$VID" -i "$AUD" -c copy "$2".mkv
+  ffmpeg -i "$VID" -i "$AUD" -c copy "${AUD%".m4a"}".mkv
+
+elif [[ $1 == '--a2aac' ]]; then
+  AUD=$2
+  ffmpeg -i "$AUD" -acodec copy "${AUD%".m4a"}".aac
 
 else
   URL="$1"
